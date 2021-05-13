@@ -13,7 +13,8 @@ import java.awt.event.WindowEvent;
  * @create: 2021-05-12 20:52
  **/
 public class TankFrame extends Frame {
-    private Tank tank=new Tank(200,200,Dir.UP);
+    private Tank myTank =new Tank(200,200,Dir.UP);
+    private Bullet myBullet=new Bullet(300,300, Dir.UP);
     public TankFrame() throws HeadlessException {
         setSize(800,600);
         setResizable(true);
@@ -30,7 +31,8 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
-        tank.paint(g);
+        myTank.paint(g);
+        myBullet.paint(g);
     }
 
     class MyKeyListener extends KeyAdapter {
@@ -57,13 +59,13 @@ public class TankFrame extends Frame {
 
         private void setMainTankDir() {
             if(!kU && !kD && !kR && !kL){
-                tank.setMoving(false);
+                myTank.setMoving(false);
             }else{
-                tank.setMoving(true);
-                if(kU) tank.setDir( Dir.UP);
-                if(kD) tank.setDir(Dir.DOWN);
-                if(kR) tank.setDir(Dir.RIGHT);
-                if(kL) tank.setDir(Dir.LEFT);
+                myTank.setMoving(true);
+                if(kU) myTank.setDir( Dir.UP);
+                if(kD) myTank.setDir(Dir.DOWN);
+                if(kR) myTank.setDir(Dir.RIGHT);
+                if(kL) myTank.setDir(Dir.LEFT);
             }
         }
 
