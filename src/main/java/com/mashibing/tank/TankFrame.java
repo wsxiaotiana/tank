@@ -72,7 +72,7 @@ public class TankFrame extends Frame {
                     kR=false; break;
                 default: break;
             }
-            super.keyReleased(e);
+            repaint();
         }
     }
 }
