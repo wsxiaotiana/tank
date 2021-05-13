@@ -3,9 +3,9 @@ package com.mashibing.tank;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
 
 /**
  * @description:
@@ -13,7 +13,7 @@ import java.awt.event.WindowEvent;
  * @create: 2021-05-12 20:52
  **/
 public class TankFrame extends Frame {
-    int x=200; int y=200;
+    private Tank tank=new Tank(200,200,Dir.UP);
     public TankFrame() throws HeadlessException {
         setSize(800,600);
         setResizable(true);
@@ -30,9 +30,7 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
-        g.fillRect(x,y,50,50);
-        //x+=10;
-        //y+=10;
+        tank.paint(g);
     }
 
     class MyKeyListener extends KeyAdapter {
@@ -42,7 +40,6 @@ public class TankFrame extends Frame {
         boolean kR=false;
         @Override
         public void keyPressed(KeyEvent e) {
-            //x+=200;
             int keycode=e.getKeyCode();
             switch (keycode){
                 case KeyEvent.VK_UP:
@@ -55,7 +52,19 @@ public class TankFrame extends Frame {
                     kR=true; break;
                 default: break;
             }
-            repaint();
+            setMainTankDir();
+        }
+
+        private void setMainTankDir() {
+            if(!kU && !kD && !kR && !kL){
+                tank.setMoving(false);
+            }else{
+                tank.setMoving(true);
+                if(kU) tank.setDir( Dir.UP);
+                if(kD) tank.setDir(Dir.DOWN);
+                if(kR) tank.setDir(Dir.RIGHT);
+                if(kL) tank.setDir(Dir.LEFT);
+            }
         }
 
         @Override
@@ -72,7 +81,7 @@ public class TankFrame extends Frame {
                     kR=false; break;
                 default: break;
             }
-            repaint();
+            setMainTankDir();
         }
     }
 }
