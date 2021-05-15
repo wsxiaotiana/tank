@@ -5,6 +5,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -13,10 +15,11 @@ import java.awt.event.WindowEvent;
  * @create: 2021-05-12 20:52
  **/
 public class TankFrame extends Frame {
-    private Tank myTank =new Tank(200,200,Dir.UP);
-    private Bullet myBullet=new Bullet(300,300, Dir.UP);
+    static final int GAME_WIDTH=800,GAME_HEIGHT=600;
+    private Tank myTank =new Tank(200,200,Dir.UP,this);
+    List<Bullet> bullets=new ArrayList<>();
     public TankFrame() throws HeadlessException {
-        setSize(800,600);
+        setSize(GAME_WIDTH,GAME_HEIGHT);
         setResizable(true);
         setTitle("tank war");
         setVisible(true);
@@ -29,10 +32,31 @@ public class TankFrame extends Frame {
         });
     }
 
+    Image offScreenImage=null;
+    @Override
+    public void update(Graphics g) {
+        if (offScreenImage == null) {
+            offScreenImage = this.createImage(GAME_WIDTH, GAME_HEIGHT);
+        }
+        Graphics gOffScreen = offScreenImage.getGraphics();
+        Color c = gOffScreen.getColor();
+        gOffScreen.setColor(Color.BLACK);
+        gOffScreen.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+        gOffScreen.setColor(c);
+        paint(gOffScreen);
+        g.drawImage(offScreenImage, 0, 0, null);
+    }
+
     @Override
     public void paint(Graphics g) {
+        Color c=g.getColor();
+        g.setColor(Color.WHITE);
+        g.drawString("子弹数量为:"+bullets.size(),10,60);
+        g.setColor(c);
         myTank.paint(g);
-        myBullet.paint(g);
+        for(int i=0;i<bullets.size();i++){
+            bullets.get(i).paint(g);
+        }
     }
 
     class MyKeyListener extends KeyAdapter {
@@ -52,6 +76,8 @@ public class TankFrame extends Frame {
                     kL=true; break;
                 case KeyEvent.VK_RIGHT:
                     kR=true; break;
+                case KeyEvent.VK_CONTROL:
+                    myTank.fire();
                 default: break;
             }
             setMainTankDir();
