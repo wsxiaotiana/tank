@@ -8,10 +8,13 @@ import java.awt.*;
  * @create: 2021-05-13 21:42
  **/
 public class Tank {
+    public final static int WIDTH= ImageMgr.tankD.getWidth();
+    public final static int HEIGHT= ImageMgr.tankD.getHeight();
+
     private int x,y;
     private Dir dir=Dir.UP;
-    private final int SPEED=10;
-    private boolean moving = false;
+    private final int SPEED=5;
+    private boolean moving = true;
     TankFrame tf=null;
 
     public boolean isMoving() {
@@ -30,11 +33,14 @@ public class Tank {
     }
 
     public void paint(Graphics g) {
-        Color c=g.getColor();
-        g.setColor(Color.GREEN);
-        g.fillRect(x,y,50,50);
-        g.setColor(c);
         move();
+        switch(dir){
+            case UP: g.drawImage(ImageMgr.tankU,x,y,null); break;
+            case DOWN: g.drawImage(ImageMgr.tankD,x,y,null); break;
+            case LEFT: g.drawImage(ImageMgr.tankL,x,y,null); break;
+            case RIGHT: g.drawImage(ImageMgr.tankR,x,y,null); break;
+            default: break;
+        }
     }
 
     private void move() {
@@ -79,6 +85,8 @@ public class Tank {
     }
 
     public void fire() {
-        tf.bullets.add(new Bullet(x,y,dir,this.tf));
+        int xX=x+WIDTH/2;
+        int yY=y+HEIGHT/2;
+        tf.bullets.add(new Bullet(xX,yY,dir,this.tf));
     }
 }

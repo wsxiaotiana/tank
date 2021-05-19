@@ -7,6 +7,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 /**
@@ -17,6 +18,7 @@ import java.util.List;
 public class TankFrame extends Frame {
     static final int GAME_WIDTH=800,GAME_HEIGHT=600;
     private Tank myTank =new Tank(200,200,Dir.UP,this);
+    public List<Tank> enemies=new ArrayList<>(4);
     List<Bullet> bullets=new ArrayList<>();
     public TankFrame() throws HeadlessException {
         setSize(GAME_WIDTH,GAME_HEIGHT);
@@ -31,8 +33,10 @@ public class TankFrame extends Frame {
             }
         });
     }
+    Random random=new Random();
 
     Image offScreenImage=null;
+    //此方法用来解决闪烁问题
     @Override
     public void update(Graphics g) {
         if (offScreenImage == null) {
@@ -54,6 +58,12 @@ public class TankFrame extends Frame {
         g.drawString("子弹数量为:"+bullets.size(),10,60);
         g.setColor(c);
         myTank.paint(g);
+        for(int i=0;i<enemies.size();i++){
+            if(random.nextInt(10)<2){
+                enemies.get(i).fire();
+            }
+            enemies.get(i).paint(g);
+        }
         for(int i=0;i<bullets.size();i++){
             bullets.get(i).paint(g);
         }

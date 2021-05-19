@@ -8,8 +8,10 @@ import java.awt.*;
  * @create: 2021-05-14 07:16
  **/
 public class Bullet {
+    private final static int WIDTH= ImageMgr.bulletD.getWidth();
+    private final static int HEIGHT= ImageMgr.bulletD.getWidth();
+
     private static final int SPEED = 10;
-    private static final int WIDTH=5,HEIGHT=5;
     private int x,y;
     private Dir dir=Dir.UP;
     boolean live=true;
@@ -21,9 +23,14 @@ public class Bullet {
             tf.bullets.remove(this);
             return;
         }
-        g.setColor(Color.red);
-        g.fillOval(x,y,WIDTH,HEIGHT);
         move();
+        switch (dir){
+            case UP: g.drawImage(ImageMgr.bulletU,x,y,null); break;
+            case DOWN: g.drawImage(ImageMgr.bulletD,x,y,null); break;
+            case LEFT: g.drawImage(ImageMgr.bulletL,x,y,null); break;
+            case RIGHT: g.drawImage(ImageMgr.bulletR,x,y,null); break;
+            default: break;
+        }
     }
 
     private void move() {
