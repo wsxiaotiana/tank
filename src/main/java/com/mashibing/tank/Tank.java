@@ -1,6 +1,8 @@
 package com.mashibing.tank;
 
 import java.awt.*;
+import java.util.Random;
+
 
 /**
  * @description: 坦克类
@@ -12,10 +14,13 @@ public class Tank {
     public final static int HEIGHT= ImageMgr.tankD.getHeight();
 
     private int x,y;
-    private Dir dir=Dir.UP;
+    private Dir dir= Dir.UP;
     private final int SPEED=5;
     private boolean moving = true;
+    private boolean living = true;
     TankFrame tf=null;
+    private Group group=Group.BAD;
+    private Random random=new Random();
 
     public boolean isMoving() {
         return moving;
@@ -25,21 +30,41 @@ public class Tank {
         this.moving = moving;
     }
 
-    public Tank(int x, int y, Dir dir,TankFrame tf) {
+    public Tank(int x, int y, Dir dir,TankFrame tf,Group group) {
+        super();
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.tf=tf;
+        this.group=group;
     }
 
     public void paint(Graphics g) {
+        if(!this.living){
+            tf.enemies.remove(this);
+            return;
+        }
         move();
+        //randomDir();
         switch(dir){
             case UP: g.drawImage(ImageMgr.tankU,x,y,null); break;
             case DOWN: g.drawImage(ImageMgr.tankD,x,y,null); break;
             case LEFT: g.drawImage(ImageMgr.tankL,x,y,null); break;
             case RIGHT: g.drawImage(ImageMgr.tankR,x,y,null); break;
             default: break;
+        }
+    }
+
+    private void randomDir() {
+        if(random.nextInt(100)<4){
+            int d=random.nextInt(10)%5;
+            switch (d){
+                case 0: this.setDir(Dir.UP); break;
+                case 1: this.setDir(Dir.DOWN); break;
+                case 2: this.setDir(Dir.LEFT); break;
+                case 3: this.setDir(Dir.RIGHT); break;
+                default: break;
+            }
         }
     }
 
@@ -53,6 +78,19 @@ public class Tank {
             case LEFT: x-=SPEED; break;
             case RIGHT:x+=SPEED; break;
             default: break;
+        }
+        if(x<0 || y<0 || x+WIDTH>tf.getWidth() || y+HEIGHT>tf.getHeight()){
+            this.dir= Dir.getOposite(dir);
+            switch (dir){
+                case UP: y-=SPEED; break;
+                case DOWN: y+=SPEED; break;
+                case LEFT: x-=SPEED; break;
+                case RIGHT:x+=SPEED; break;
+                default: break;
+            }
+        }
+        if(random.nextInt(10)<2){
+            this.fire();
         }
     }
 
@@ -84,9 +122,23 @@ public class Tank {
         return SPEED;
     }
 
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
     public void fire() {
         int xX=x+WIDTH/2;
         int yY=y+HEIGHT/2;
-        tf.bullets.add(new Bullet(xX,yY,dir,this.tf));
+        tf.bullets.add(new Bullet(xX,yY,dir,this.tf,this.group==Group.GOOD? Group.GOOD: Group.BAD));
     }
+
+    public void die() {
+        tf.explodes.add(new Explode(x,y,tf));
+        this.living=false;
+    }
+
 }
