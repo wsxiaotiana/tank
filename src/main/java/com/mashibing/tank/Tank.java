@@ -10,12 +10,12 @@ import java.util.Random;
  * @create: 2021-05-13 21:42
  **/
 public class Tank {
-    public final static int WIDTH= ImageMgr.tankD.getWidth();
-    public final static int HEIGHT= ImageMgr.tankD.getHeight();
+    public final static int WIDTH= ImageMgr.goodTankU.getWidth();
+    public final static int HEIGHT= ImageMgr.goodTankU.getHeight();
 
     private int x,y;
     private Dir dir= Dir.UP;
-    private final int SPEED=5;
+    private final int SPEED=2;
     private boolean moving = true;
     private boolean living = true;
     TankFrame tf=null;
@@ -45,18 +45,18 @@ public class Tank {
             return;
         }
         move();
-        //randomDir();
+        randomDir();
         switch(dir){
-            case UP: g.drawImage(ImageMgr.tankU,x,y,null); break;
-            case DOWN: g.drawImage(ImageMgr.tankD,x,y,null); break;
-            case LEFT: g.drawImage(ImageMgr.tankL,x,y,null); break;
-            case RIGHT: g.drawImage(ImageMgr.tankR,x,y,null); break;
+            case UP: g.drawImage(this.group==Group.GOOD ? ImageMgr.goodTankU : ImageMgr.badTankU,x,y,null); break;
+            case DOWN: g.drawImage(this.group==Group.GOOD ? ImageMgr.goodTankD : ImageMgr.badTankD,x,y,null); break;
+            case LEFT: g.drawImage(this.group==Group.GOOD ? ImageMgr.goodTankL : ImageMgr.badTankL,x,y,null); break;
+            case RIGHT: g.drawImage(this.group==Group.GOOD ? ImageMgr.goodTankR : ImageMgr.badTankR,x,y,null); break;
             default: break;
         }
     }
 
     private void randomDir() {
-        if(random.nextInt(100)<4){
+        if(this.group == Group.BAD && random.nextInt(100)<4){
             int d=random.nextInt(10)%5;
             switch (d){
                 case 0: this.setDir(Dir.UP); break;
@@ -79,18 +79,24 @@ public class Tank {
             case RIGHT:x+=SPEED; break;
             default: break;
         }
-        if(x<0 || y<0 || x+WIDTH>tf.getWidth() || y+HEIGHT>tf.getHeight()){
-            this.dir= Dir.getOposite(dir);
-            switch (dir){
-                case UP: y-=SPEED; break;
-                case DOWN: y+=SPEED; break;
-                case LEFT: x-=SPEED; break;
-                case RIGHT:x+=SPEED; break;
-                default: break;
-            }
-        }
-        if(random.nextInt(10)<2){
+        boundCheck();
+        if(this.group ==Group.BAD && random.nextInt(100)<5){
             this.fire();
+        }
+    }
+
+    private void boundCheck() {
+        if(x<WIDTH/4-4){
+            x=WIDTH/4-4;
+        }
+        if(y<HEIGHT/2){
+            y=HEIGHT/2;
+        }
+        if(x>tf.getWidth()-WIDTH-4){
+            x=tf.getWidth()-WIDTH-4;
+        }
+        if(y>tf.getHeight()-HEIGHT-4){
+            y=tf.getHeight()-HEIGHT-4;
         }
     }
 
@@ -131,8 +137,8 @@ public class Tank {
     }
 
     public void fire() {
-        int xX=x+WIDTH/2;
-        int yY=y+HEIGHT/2;
+        int xX=x+WIDTH/4;
+        int yY=y+HEIGHT/4;
         tf.bullets.add(new Bullet(xX,yY,dir,this.tf,this.group==Group.GOOD? Group.GOOD: Group.BAD));
     }
 

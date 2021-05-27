@@ -10,20 +10,26 @@ import java.io.IOException;
  * @create: 2021-05-20 06:21
  **/
 public class ImageMgr {
-    public static BufferedImage tankU,tankD,tankL,tankR;
+    public static BufferedImage goodTankU, goodTankD,goodTankL,goodTankR;
+    public static BufferedImage badTankU, badTankD,badTankL,badTankR;
     public static BufferedImage bulletU,bulletD,bulletL,bulletR;
     public static BufferedImage[] explodeImages =new BufferedImage[16];
     static {
         try {
-            tankU = ImageIO.read(ImageMgr.class.getClassLoader().getResourceAsStream("image/tankU.gif"));
-            tankD = ImageIO.read(ImageMgr.class.getClassLoader().getResourceAsStream("image/tankD.gif"));
-            tankL = ImageIO.read(ImageMgr.class.getClassLoader().getResourceAsStream("image/tankL.gif"));
-            tankR = ImageIO.read(ImageMgr.class.getClassLoader().getResourceAsStream("image/tankR.gif"));
+            goodTankU = ImageIO.read(ImageMgr.class.getClassLoader().getResourceAsStream("image/GoodTank1.png"));
+            goodTankD = ImageUtil.rotateImage(goodTankU,180);
+            goodTankL = ImageUtil.rotateImage(goodTankU,-90);
+            goodTankR = ImageUtil.rotateImage(goodTankU,90);
 
-            bulletU=ImageIO.read(ImageMgr.class.getClassLoader().getResourceAsStream("image/bulletU.gif"));
-            bulletD=ImageIO.read(ImageMgr.class.getClassLoader().getResourceAsStream("image/bulletD.gif"));
-            bulletL=ImageIO.read(ImageMgr.class.getClassLoader().getResourceAsStream("image/bulletL.gif"));
-            bulletR=ImageIO.read(ImageMgr.class.getClassLoader().getResourceAsStream("image/bulletR.gif"));
+            badTankU = ImageIO.read(ImageMgr.class.getClassLoader().getResourceAsStream("image/BadTank1.png"));
+            badTankD = ImageUtil.rotateImage(badTankU,180);
+            badTankL = ImageUtil.rotateImage(badTankU,-90);
+            badTankR = ImageUtil.rotateImage(badTankU,90);
+
+            bulletU=ImageIO.read(ImageMgr.class.getClassLoader().getResourceAsStream("image/bulletU.png"));
+            bulletD=ImageUtil.rotateImage(bulletU,180);
+            bulletL=ImageUtil.rotateImage(bulletU,-90);
+            bulletR=ImageUtil.rotateImage(bulletU,90);
             for(int i=0; i<explodeImages.length;i++){
                 explodeImages[i]=ImageIO.read(ImageMgr.class.getClassLoader().getResourceAsStream("image/e"+(i+1)+".gif"));
             }

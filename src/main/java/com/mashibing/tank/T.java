@@ -11,7 +11,7 @@ public class T {
         for(int i=0; i<4; i++){
            frame.enemies.add(new Tank(300+i*80,300, Dir.DOWN,frame,Group.BAD));
         }
-
+        new Thread(()-> new Audio("audio/war1.wav").loop()).start();
         while(true){
             Thread.sleep(50);
             frame.repaint();
