@@ -20,6 +20,39 @@ public class TankFrame extends Frame {
     private Tank myTank =new Tank(200,400,Dir.UP,this,Group.GOOD);
     public List<Tank> enemies=new ArrayList<>(4);
     List<Bullet> bullets=new ArrayList<>();
+
+    public Tank getMyTank() {
+        return myTank;
+    }
+
+    public void setMyTank(Tank myTank) {
+        this.myTank = myTank;
+    }
+
+    public List<Tank> getEnemies() {
+        return enemies;
+    }
+
+    public void setEnemies(List<Tank> enemies) {
+        this.enemies = enemies;
+    }
+
+    public List<Bullet> getBullets() {
+        return bullets;
+    }
+
+    public void setBullets(List<Bullet> bullets) {
+        this.bullets = bullets;
+    }
+
+    public List<Explode> getExplodes() {
+        return explodes;
+    }
+
+    public void setExplodes(List<Explode> explodes) {
+        this.explodes = explodes;
+    }
+
     List<Explode> explodes=new ArrayList<>();
     public TankFrame() throws HeadlessException {
         setSize(GAME_WIDTH,GAME_HEIGHT);
@@ -95,7 +128,7 @@ public class TankFrame extends Frame {
                 case KeyEvent.VK_RIGHT:
                     kR=true; break;
                 case KeyEvent.VK_CONTROL:
-                    myTank.fire();
+                    myTank.fire(); break;
                 default: break;
             }
             setMainTankDir();

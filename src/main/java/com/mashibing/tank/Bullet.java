@@ -53,6 +53,7 @@ public class Bullet {
         this.dir = dir;
         this.tf=tf;
         this.group=group;
+        tf.bullets.add(this);
     }
 
     public int getX() {
@@ -92,7 +93,7 @@ public class Bullet {
             return;
         }
         Rectangle rect1 = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
-        Rectangle rect2 = new Rectangle(tank.getX(),tank.getY(),Tank.WIDTH,Tank.HEIGHT);
+        Rectangle rect2 = new Rectangle(tank.x,tank.y,Tank.WIDTH,Tank.HEIGHT);
         if(rect1.intersects(rect2)){
             this.die();
             tank.die();

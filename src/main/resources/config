@@ -1,0 +1,3 @@
+# strategies
+defaultStrategy=com.mashibing.tank.DefaultFireStrategy
+allDirStrategy=com.mashibing.tank.AllDirectionFireStrategy

@@ -1,6 +1,7 @@
 package com.mashibing.tank;
 
 import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 
@@ -13,22 +14,15 @@ public class Tank {
     public final static int WIDTH= ImageMgr.tankD.getWidth();
     public final static int HEIGHT= ImageMgr.tankD.getHeight();
 
-    private int x,y;
-    private Dir dir= Dir.UP;
+    int x,y;
+    Dir dir= Dir.UP;
     private final int SPEED=5;
-    private boolean moving = true;
-    private boolean living = true;
+    boolean moving = true;
+    boolean living = true;
     TankFrame tf=null;
     private Group group=Group.BAD;
     private Random random=new Random();
-
-    public boolean isMoving() {
-        return moving;
-    }
-
-    public void setMoving(boolean moving) {
-        this.moving = moving;
-    }
+    FireStrategy fireStrategy=null;
 
     public Tank(int x, int y, Dir dir,TankFrame tf,Group group) {
         super();
@@ -37,6 +31,23 @@ public class Tank {
         this.dir = dir;
         this.tf=tf;
         this.group=group;
+        if(this.group==Group.GOOD){
+            String defaultStrategy=(String)PropertyMgr.get("defaultStrategy");
+            try {
+                fireStrategy=(FireStrategy)Class.forName(defaultStrategy).getDeclaredConstructor().newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            this.fireStrategy=new AllDirectionFireStrategy();
+        }else{
+            String defaultStrategy=(String)PropertyMgr.get("allDirStrategy");
+            try {
+                fireStrategy=(FireStrategy)Class.forName(defaultStrategy).getDeclaredConstructor().newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            this.fireStrategy=new AllDirectionFireStrategy();
+        }
     }
 
     public void paint(Graphics g) {
@@ -94,21 +105,6 @@ public class Tank {
         }
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
 
     public Dir getDir() {
         return dir;
@@ -116,6 +112,13 @@ public class Tank {
 
     public void setDir(Dir dir) {
         this.dir = dir;
+    }
+    public boolean isMoving() {
+        return moving;
+    }
+
+    public void setMoving(boolean moving) {
+        this.moving = moving;
     }
 
     public int getSPEED() {
@@ -131,9 +134,7 @@ public class Tank {
     }
 
     public void fire() {
-        int xX=x+WIDTH/2;
-        int yY=y+HEIGHT/2;
-        tf.bullets.add(new Bullet(xX,yY,dir,this.tf,this.group==Group.GOOD? Group.GOOD: Group.BAD));
+        fireStrategy.fire(this);
     }
 
     public void die() {
