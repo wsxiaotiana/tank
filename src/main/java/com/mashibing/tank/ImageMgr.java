@@ -10,6 +10,8 @@ import java.io.IOException;
  * @create: 2021-05-20 06:21
  **/
 public class ImageMgr {
+    private static volatile ImageMgr INSTANCE;
+    private ImageMgr(){}
     public static BufferedImage tankU,tankD,tankL,tankR;
     public static BufferedImage bulletU,bulletD,bulletL,bulletR;
     public static BufferedImage[] explodeImages =new BufferedImage[16];
@@ -30,5 +32,15 @@ public class ImageMgr {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public static ImageMgr getINSTANCE(){
+        if(INSTANCE==null){
+            synchronized (ImageMgr.class){
+                if(INSTANCE==null){
+                    INSTANCE=new ImageMgr();
+                }
+            }
+        }
+        return INSTANCE;
     }
 }
