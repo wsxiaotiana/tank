@@ -1,5 +1,12 @@
 package com.mashibing.tank;
 
+import com.mashibing.tank.abstractfactory.AbstractBullet;
+import com.mashibing.tank.abstractfactory.AbstractExplode;
+import com.mashibing.tank.abstractfactory.AbstractTank;
+import com.mashibing.tank.abstractfactory.AbstractWarFactory;
+import com.mashibing.tank.abstractfactory.DefaultWarFactory;
+import com.mashibing.tank.abstractfactory.RectWarFactory;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -16,10 +23,11 @@ import java.util.Random;
  * @create: 2021-05-12 20:52
  **/
 public class TankFrame extends Frame {
-    static final int GAME_WIDTH=800,GAME_HEIGHT=600;
+    public static final int GAME_WIDTH=800,GAME_HEIGHT=600;
+    public List<AbstractTank> enemies=new ArrayList<>(4);
+    public List<AbstractBullet> bullets=new ArrayList<>();
+    public AbstractWarFactory warFactory=new DefaultWarFactory();
     private Tank myTank =new Tank(200,400,Dir.UP,this,Group.GOOD);
-    public List<Tank> enemies=new ArrayList<>(4);
-    List<Bullet> bullets=new ArrayList<>();
 
     public Tank getMyTank() {
         return myTank;
@@ -29,31 +37,31 @@ public class TankFrame extends Frame {
         this.myTank = myTank;
     }
 
-    public List<Tank> getEnemies() {
+    public List<AbstractTank> getEnemies() {
         return enemies;
     }
 
-    public void setEnemies(List<Tank> enemies) {
+    public void setEnemies(List<AbstractTank> enemies) {
         this.enemies = enemies;
     }
 
-    public List<Bullet> getBullets() {
+    public List<AbstractBullet> getBullets() {
         return bullets;
     }
 
-    public void setBullets(List<Bullet> bullets) {
+    public void setBullets(List<AbstractBullet> bullets) {
         this.bullets = bullets;
     }
 
-    public List<Explode> getExplodes() {
+    public List<AbstractExplode> getExplodes() {
         return explodes;
     }
 
-    public void setExplodes(List<Explode> explodes) {
+    public void setExplodes(List<AbstractExplode> explodes) {
         this.explodes = explodes;
     }
 
-    List<Explode> explodes=new ArrayList<>();
+    public List<AbstractExplode> explodes=new ArrayList<>();
     public TankFrame() throws HeadlessException {
         setSize(GAME_WIDTH,GAME_HEIGHT);
         setResizable(true);

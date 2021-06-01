@@ -1,7 +1,10 @@
-package com.mashibing.tank;
+package com.mashibing.tank.abstractfactory;
 
-import com.mashibing.tank.abstractfactory.AbstractBullet;
-import com.mashibing.tank.abstractfactory.AbstractTank;
+import com.mashibing.tank.Dir;
+import com.mashibing.tank.Group;
+import com.mashibing.tank.ImageMgr;
+import com.mashibing.tank.Tank;
+import com.mashibing.tank.TankFrame;
 
 import java.awt.*;
 
@@ -10,7 +13,7 @@ import java.awt.*;
  * @author: yanxiaotian
  * @create: 2021-05-14 07:16
  **/
-public class Bullet extends AbstractBullet {
+public class RectBullet extends AbstractBullet {
     private final static int WIDTH= ImageMgr.bulletD.getWidth();
     private final static int HEIGHT= ImageMgr.bulletD.getWidth();
 
@@ -27,14 +30,11 @@ public class Bullet extends AbstractBullet {
             tf.bullets.remove(this);
             return;
         }
+        Color c=g.getColor();
+        g.setColor(Color.yellow);
+        g.fillRect(x,y,20,20);
+        g.setColor(c);
         move();
-        switch (dir){
-            case UP: g.drawImage(ImageMgr.bulletU,x,y,null); break;
-            case DOWN: g.drawImage(ImageMgr.bulletD,x,y,null); break;
-            case LEFT: g.drawImage(ImageMgr.bulletL,x,y,null); break;
-            case RIGHT: g.drawImage(ImageMgr.bulletR,x,y,null); break;
-            default: break;
-        }
     }
 
     private void move() {
@@ -50,7 +50,7 @@ public class Bullet extends AbstractBullet {
         }
     }
 
-    public Bullet(int x, int y, Dir dir,TankFrame tf,Group group) {
+    public RectBullet(int x, int y, Dir dir, TankFrame tf, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;

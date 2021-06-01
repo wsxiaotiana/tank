@@ -1,8 +1,13 @@
-package com.mashibing.tank;
+package com.mashibing.tank.abstractfactory;
 
-import com.mashibing.tank.abstractfactory.AbstractTank;
-import com.mashibing.tank.abstractfactory.AbstractWarFactory;
-import com.mashibing.tank.abstractfactory.DefaultWarFactory;
+import com.mashibing.tank.AllDirectionFireStrategy;
+import com.mashibing.tank.Dir;
+import com.mashibing.tank.FireStrategy;
+import com.mashibing.tank.Group;
+import com.mashibing.tank.ImageMgr;
+import com.mashibing.tank.PropertyMgr;
+import com.mashibing.tank.Tank;
+import com.mashibing.tank.TankFrame;
 
 import java.awt.*;
 import java.util.Random;
@@ -13,10 +18,11 @@ import java.util.Random;
  * @author: yanxiaotian
  * @create: 2021-05-13 21:42
  **/
-public class Tank extends AbstractTank {
+public class RectTank extends AbstractTank {
     public final static int WIDTH= ImageMgr.tankD.getWidth();
     public final static int HEIGHT= ImageMgr.tankD.getHeight();
 
+    int x,y;
     Dir dir= Dir.UP;
     private final int SPEED=5;
     boolean moving = true;
@@ -25,7 +31,7 @@ public class Tank extends AbstractTank {
     private Random random=new Random();
     FireStrategy fireStrategy=null;
 
-    public Tank(int x, int y, Dir dir,TankFrame tf,Group group) {
+    public RectTank(int x, int y, Dir dir, TankFrame tf, Group group) {
         super();
         this.x = x;
         this.y = y;
@@ -33,7 +39,7 @@ public class Tank extends AbstractTank {
         this.tf=tf;
         this.group=group;
         if(this.group==Group.GOOD){
-            String defaultStrategy=(String)PropertyMgr.get("defaultStrategy");
+            String defaultStrategy=(String) PropertyMgr.get("defaultStrategy");
             try {
                 fireStrategy=(FireStrategy)Class.forName(defaultStrategy).getDeclaredConstructor().newInstance();
             } catch (Exception e) {
@@ -56,15 +62,12 @@ public class Tank extends AbstractTank {
             tf.enemies.remove(this);
             return;
         }
+        Color c=g.getColor();
+        g.setColor(Color.BLUE);
+        g.fillRect(x,y,40,40);
+        g.setColor(c);
         move();
         //randomDir();
-        switch(dir){
-            case UP: g.drawImage(ImageMgr.tankU,x,y,null); break;
-            case DOWN: g.drawImage(ImageMgr.tankD,x,y,null); break;
-            case LEFT: g.drawImage(ImageMgr.tankL,x,y,null); break;
-            case RIGHT: g.drawImage(ImageMgr.tankR,x,y,null); break;
-            default: break;
-        }
     }
 
     private void randomDir() {
@@ -125,6 +128,7 @@ public class Tank extends AbstractTank {
     public int getSPEED() {
         return SPEED;
     }
+
     @Override
     public Group getGroup() {
         return group;
@@ -136,7 +140,7 @@ public class Tank extends AbstractTank {
     @Override
     public void fire() {
         //fireStrategy.fire(this);
-        int xX=this.x+Tank.WIDTH/2;
+        int xX=this.x+ Tank.WIDTH/2;
         int yY=this.y+Tank.HEIGHT/2;
         this.tf.warFactory.createBullet(xX,yY,this.dir,this.tf,this.getGroup()== Group.GOOD? Group.GOOD: Group.BAD);
     }

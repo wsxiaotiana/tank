@@ -1,6 +1,8 @@
-package com.mashibing.tank;
+package com.mashibing.tank.abstractfactory;
 
-import com.mashibing.tank.abstractfactory.AbstractExplode;
+import com.mashibing.tank.Audio;
+import com.mashibing.tank.ImageMgr;
+import com.mashibing.tank.TankFrame;
 
 import java.awt.*;
 
@@ -9,7 +11,7 @@ import java.awt.*;
  * @author: yanxiaotian
  * @create: 2021-05-13 21:42
  **/
-public class Explode extends AbstractExplode {
+public class RectExplode extends AbstractExplode {
     public final static int WIDTH= ImageMgr.explodeImages[0].getWidth();
     public final static int HEIGHT= ImageMgr.explodeImages[0].getHeight();
 
@@ -18,7 +20,7 @@ public class Explode extends AbstractExplode {
     TankFrame tf=null;
     private int step=0;
 
-    public Explode(int x, int y, TankFrame tf) {
+    public RectExplode(int x, int y, TankFrame tf) {
         super();
         this.x = x;
         this.y = y;
@@ -28,8 +30,13 @@ public class Explode extends AbstractExplode {
     }
     @Override
     public void paint(Graphics g) {
-        g.drawImage(ImageMgr.explodeImages[step++],x,y,null);
-        if(step>=ImageMgr.explodeImages.length){
+        Color c=g.getColor();
+        g.setColor(Color.RED);
+        g.fillRect(x,y,10*step,10*step);
+        g.setColor(c);
+        //g.drawImage(ImageMgr.explodeImages[step++],x,y,null);
+        step++;
+        if(step>=15){
             step=0;
             tf.explodes.remove(this);
         }
