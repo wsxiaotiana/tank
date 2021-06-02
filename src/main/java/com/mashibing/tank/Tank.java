@@ -19,44 +19,42 @@ public class Tank {
     private final int SPEED=5;
     boolean moving = true;
     boolean living = true;
-    TankFrame tf=null;
     private Group group=Group.BAD;
     private Random random=new Random();
     FireStrategy fireStrategy=null;
+    GameModel gm=null;
 
-    public Tank(int x, int y, Dir dir,TankFrame tf,Group group) {
+    public Tank(int x, int y, Dir dir,Group group,GameModel gm) {
         super();
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.tf=tf;
+        this.gm=gm;
         this.group=group;
         if(this.group==Group.GOOD){
-            String defaultStrategy=(String)PropertyMgr.get("defaultStrategy");
+            String strategy=(String)PropertyMgr.get("defaultStrategy");
             try {
-                fireStrategy=(FireStrategy)Class.forName(defaultStrategy).getDeclaredConstructor().newInstance();
+                fireStrategy=(FireStrategy)Class.forName(strategy).getDeclaredConstructor().newInstance();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            this.fireStrategy=new AllDirectionFireStrategy();
         }else{
-            String defaultStrategy=(String)PropertyMgr.get("allDirStrategy");
+            String strategy=(String)PropertyMgr.get("defaultStrategy");
             try {
-                fireStrategy=(FireStrategy)Class.forName(defaultStrategy).getDeclaredConstructor().newInstance();
+                fireStrategy=(FireStrategy)Class.forName(strategy).getDeclaredConstructor().newInstance();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            this.fireStrategy=new AllDirectionFireStrategy();
         }
     }
 
     public void paint(Graphics g) {
         if(!this.living){
-            tf.enemies.remove(this);
+            gm.enemies.remove(this);
             return;
         }
         move();
-        //randomDir();
+        randomDir();
         switch(dir){
             case UP: g.drawImage(ImageMgr.tankU,x,y,null); break;
             case DOWN: g.drawImage(ImageMgr.tankD,x,y,null); break;
@@ -90,13 +88,12 @@ public class Tank {
             case RIGHT:x+=SPEED; break;
             default: break;
         }
-        if(x<0 || y<0 || x+WIDTH>tf.getWidth() || y+HEIGHT>tf.getHeight()){
-            this.dir= Dir.getOposite(dir);
+        if(x<0 || y<0 || x+WIDTH>TankFrame.GAME_WIDTH || y+HEIGHT>TankFrame.GAME_HEIGHT){
             switch (dir){
-                case UP: y-=SPEED; break;
-                case DOWN: y+=SPEED; break;
-                case LEFT: x-=SPEED; break;
-                case RIGHT:x+=SPEED; break;
+                case UP: y+=SPEED; break;
+                case DOWN: y-=SPEED; break;
+                case LEFT: x+=SPEED; break;
+                case RIGHT:x-=SPEED; break;
                 default: break;
             }
         }
@@ -138,7 +135,7 @@ public class Tank {
     }
 
     public void die() {
-        tf.explodes.add(new Explode(x,y,tf));
+        gm.explodes.add(new Explode(x,y,gm));
         this.living=false;
     }
 

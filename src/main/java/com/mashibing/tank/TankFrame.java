@@ -5,9 +5,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 
 /**
@@ -16,44 +13,9 @@ import java.util.Random;
  * @create: 2021-05-12 20:52
  **/
 public class TankFrame extends Frame {
+    GameModel gameModel=new GameModel();
     static final int GAME_WIDTH=800,GAME_HEIGHT=600;
-    private Tank myTank =new Tank(200,400,Dir.UP,this,Group.GOOD);
-    public List<Tank> enemies=new ArrayList<>(4);
-    List<Bullet> bullets=new ArrayList<>();
 
-    public Tank getMyTank() {
-        return myTank;
-    }
-
-    public void setMyTank(Tank myTank) {
-        this.myTank = myTank;
-    }
-
-    public List<Tank> getEnemies() {
-        return enemies;
-    }
-
-    public void setEnemies(List<Tank> enemies) {
-        this.enemies = enemies;
-    }
-
-    public List<Bullet> getBullets() {
-        return bullets;
-    }
-
-    public void setBullets(List<Bullet> bullets) {
-        this.bullets = bullets;
-    }
-
-    public List<Explode> getExplodes() {
-        return explodes;
-    }
-
-    public void setExplodes(List<Explode> explodes) {
-        this.explodes = explodes;
-    }
-
-    List<Explode> explodes=new ArrayList<>();
     public TankFrame() throws HeadlessException {
         setSize(GAME_WIDTH,GAME_HEIGHT);
         setResizable(true);
@@ -67,8 +29,6 @@ public class TankFrame extends Frame {
             }
         });
     }
-    Random random=new Random();
-
     Image offScreenImage=null;
     //此方法用来解决闪烁问题
     @Override
@@ -87,27 +47,7 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
-        Color c=g.getColor();
-        g.setColor(Color.WHITE);
-        g.drawString("子弹数量为:"+bullets.size(),10,60);
-        g.drawString("敌人坦克数量为:"+enemies.size(),10,80);
-        g.drawString("爆炸的数量为:"+explodes.size(),10,100);
-        g.setColor(c);
-        myTank.paint(g);
-        for(int i=0;i<enemies.size();i++){
-            enemies.get(i).paint(g);
-        }
-        for(int i=0;i<bullets.size();i++){
-            bullets.get(i).paint(g);
-        }
-        for(int i=0;i<enemies.size();i++){
-            for(int j=0;j<bullets.size();j++){
-                bullets.get(j).collideWith(enemies.get(i));
-            }
-        }
-        for(int i=0;i<explodes.size();i++){
-            explodes.get(i).paint(g);
-        }
+        gameModel.paint(g);
     }
 
     class MyKeyListener extends KeyAdapter {
@@ -128,7 +68,7 @@ public class TankFrame extends Frame {
                 case KeyEvent.VK_RIGHT:
                     kR=true; break;
                 case KeyEvent.VK_CONTROL:
-                    myTank.fire(); break;
+                    gameModel.getMyTank().fire(); break;
                 default: break;
             }
             setMainTankDir();
@@ -136,13 +76,13 @@ public class TankFrame extends Frame {
 
         private void setMainTankDir() {
             if(!kU && !kD && !kR && !kL){
-                myTank.setMoving(false);
+                gameModel.getMyTank().setMoving(false);
             }else{
-                myTank.setMoving(true);
-                if(kU) myTank.setDir( Dir.UP);
-                if(kD) myTank.setDir(Dir.DOWN);
-                if(kR) myTank.setDir(Dir.RIGHT);
-                if(kL) myTank.setDir(Dir.LEFT);
+                gameModel.getMyTank().setMoving(true);
+                if(kU) gameModel.getMyTank().setDir( Dir.UP);
+                if(kD) gameModel.getMyTank().setDir(Dir.DOWN);
+                if(kR) gameModel.getMyTank().setDir(Dir.RIGHT);
+                if(kL) gameModel.getMyTank().setDir(Dir.LEFT);
             }
         }
 

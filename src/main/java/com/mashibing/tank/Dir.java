@@ -7,14 +7,4 @@ package com.mashibing.tank;
  **/
 public enum Dir {
     LEFT,UP,RIGHT,DOWN;
-    public static Dir getOposite(Dir dir){
-        switch(dir){
-            case LEFT: return RIGHT;
-            case UP: return DOWN;
-            case RIGHT: return LEFT;
-            case DOWN: return UP;
-            default: break;
-        }
-        return dir;
-    }
 }

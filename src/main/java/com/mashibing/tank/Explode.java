@@ -13,14 +13,14 @@ public class Explode {
 
     private int x,y;
     private boolean living = true;
-    TankFrame tf=null;
+    GameModel gm=null;
     private int step=0;
 
-    public Explode(int x, int y, TankFrame tf) {
+    public Explode(int x, int y, GameModel gm) {
         super();
         this.x = x;
         this.y = y;
-        this.tf=tf;
+        this.gm=gm;
         Audio audio=new Audio("audio/explode.wav");
         audio.play();
     }
@@ -29,7 +29,7 @@ public class Explode {
         g.drawImage(ImageMgr.explodeImages[step++],x,y,null);
         if(step>=ImageMgr.explodeImages.length){
             step=0;
-            tf.explodes.remove(this);
+            gm.explodes.remove(this);
         }
     }
 

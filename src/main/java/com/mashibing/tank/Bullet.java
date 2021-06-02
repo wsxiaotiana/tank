@@ -15,13 +15,13 @@ public class Bullet {
     private int x,y;
     private Dir dir=Dir.UP;
     boolean living =true;
-    TankFrame tf=null;
+    GameModel gm=null;
     private Group group = Group.BAD;
 
 
     public void paint(Graphics g) {
         if(!living){
-            tf.bullets.remove(this);
+            gm.bullets.remove(this);
             return;
         }
         move();
@@ -47,13 +47,13 @@ public class Bullet {
         }
     }
 
-    public Bullet(int x, int y, Dir dir,TankFrame tf,Group group) {
+    public Bullet(int x, int y, Dir dir,GameModel gm,Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.tf=tf;
+        this.gm=gm;
         this.group=group;
-        tf.bullets.add(this);
+        gm.bullets.add(this);
     }
 
     public int getX() {
