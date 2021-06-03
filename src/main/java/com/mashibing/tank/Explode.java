@@ -7,7 +7,7 @@ import java.awt.*;
  * @author: yanxiaotian
  * @create: 2021-05-13 21:42
  **/
-public class Explode {
+public class Explode extends GameObject{
     public final static int WIDTH= ImageMgr.explodeImages[0].getWidth();
     public final static int HEIGHT= ImageMgr.explodeImages[0].getHeight();
 
@@ -24,12 +24,12 @@ public class Explode {
         Audio audio=new Audio("audio/explode.wav");
         audio.play();
     }
-
+    @Override
     public void paint(Graphics g) {
         g.drawImage(ImageMgr.explodeImages[step++],x,y,null);
         if(step>=ImageMgr.explodeImages.length){
             step=0;
-            gm.explodes.remove(this);
+            gm.remove(this);
         }
     }
 

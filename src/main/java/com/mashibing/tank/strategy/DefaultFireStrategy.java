@@ -1,4 +1,8 @@
-package com.mashibing.tank;
+package com.mashibing.tank.strategy;
+
+import com.mashibing.tank.Bullet;
+import com.mashibing.tank.Group;
+import com.mashibing.tank.Tank;
 
 /**
  * @description: 普通开火

@@ -5,7 +5,7 @@ package com.mashibing.tank;
  * @author: yanxiaotian
  * @create: 2021-04-24 11:02
  **/
-public class T {
+public class Main {
     public static void main(String[] args) throws Exception{
         TankFrame frame=new TankFrame();
 

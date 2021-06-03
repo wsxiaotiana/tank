@@ -7,7 +7,7 @@ import java.awt.*;
  * @author: yanxiaotian
  * @create: 2021-05-14 07:16
  **/
-public class Bullet {
+public class Bullet extends GameObject{
     private final static int WIDTH= ImageMgr.bulletD.getWidth();
     private final static int HEIGHT= ImageMgr.bulletD.getWidth();
 
@@ -18,10 +18,10 @@ public class Bullet {
     GameModel gm=null;
     private Group group = Group.BAD;
 
-
+    @Override
     public void paint(Graphics g) {
         if(!living){
-            gm.bullets.remove(this);
+            gm.remove(this);
             return;
         }
         move();
@@ -53,7 +53,7 @@ public class Bullet {
         this.dir = dir;
         this.gm=gm;
         this.group=group;
-        gm.bullets.add(this);
+        gm.add(this);
     }
 
     public int getX() {
