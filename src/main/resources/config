@@ -1,3 +1,6 @@
 # strategies
 defaultStrategy=com.mashibing.tank.strategy.DefaultFireStrategy
 allDirStrategy=com.mashibing.tank.strategy.AllDirectionFireStrategy
+
+#colliders
+colliders=com.mashibing.tank.col.BulletTankCollider,com.mashibing.tank.col.TankTankCollider

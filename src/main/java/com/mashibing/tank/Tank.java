@@ -49,6 +49,7 @@ public class Tank extends GameObject {
         this.dir = dir;
         this.gm = gm;
         this.group = group;
+        this.rect=new Rectangle(x,y,WIDTH,HEIGHT);
         if (this.group == Group.GOOD) {
             String strategy = (String) PropertyMgr.get("defaultStrategy");
             try {
@@ -83,7 +84,7 @@ public class Tank extends GameObject {
     }
 
     public Rectangle getRect() {
-        return new Rectangle(x,y,WIDTH,HEIGHT);
+        return this.rect;
     }
 
     @Override
@@ -110,9 +111,18 @@ public class Tank extends GameObject {
             default:
                 break;
         }
+        updateRect(x,y);
+    }
+
+    private void updateRect(int x, int y) {
+        rect.x=x;
+        rect.y=y;
     }
 
     public void randomDir() {
+        if(this.group==Group.GOOD){
+            return;
+        }
         if (random.nextInt(100) < 4) {
             int d = random.nextInt(10) % 5;
             switch (d) {
@@ -174,7 +184,7 @@ public class Tank extends GameObject {
                     break;
             }
         }
-        if (random.nextInt(100) < 2) {
+        if (this.group == Group.BAD && random.nextInt(100) < 2) {
             this.fire();
         }
     }
@@ -219,5 +229,9 @@ public class Tank extends GameObject {
 
     public void stop(){
         this.moving=false;
+    }
+    public void back(){
+        x=preX;
+        y=preY;
     }
 }

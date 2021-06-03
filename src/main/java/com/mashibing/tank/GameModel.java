@@ -2,6 +2,7 @@ package com.mashibing.tank;
 
 import com.mashibing.tank.col.BulletTankCollider;
 import com.mashibing.tank.col.Collider;
+import com.mashibing.tank.col.ColliderChain;
 import com.mashibing.tank.col.TankTankCollider;
 
 import java.awt.*;
@@ -20,8 +21,7 @@ public class GameModel {
     List<Explode> explodes=new ArrayList<>();*/
 
     List<GameObject> objects=new ArrayList<>();
-    Collider collider=new BulletTankCollider();
-    Collider collider2=new TankTankCollider();
+    ColliderChain colliderChain=new ColliderChain();
 
     public GameModel(){
         for(int i=0; i<4; i++){
@@ -47,8 +47,7 @@ public class GameModel {
         }
         for(int i=0; i<objects.size();i++){
             for(int j=i+1;j<objects.size();j++){
-                collider.collide(objects.get(i),objects.get(j));
-                collider2.collide(objects.get(i),objects.get(j));
+                colliderChain.collide(objects.get(i),objects.get(j));
             }
         }
 /*        for(int i=0;i<enemies.size();i++){

@@ -8,15 +8,16 @@ import java.awt.*;
  * @create: 2021-05-14 07:16
  **/
 public class Bullet extends GameObject{
-    private final static int WIDTH= ImageMgr.bulletD.getWidth();
-    private final static int HEIGHT= ImageMgr.bulletD.getWidth();
+    public final static int WIDTH= ImageMgr.bulletD.getWidth();
+    public final static int HEIGHT= ImageMgr.bulletD.getWidth();
 
     private static final int SPEED = 10;
     private int x,y;
     private Dir dir=Dir.UP;
     boolean living =true;
-    GameModel gm=null;
+    public GameModel gm=null;
     private Group group = Group.BAD;
+    private Rectangle rect=null;
 
     @Override
     public void paint(Graphics g) {
@@ -54,10 +55,15 @@ public class Bullet extends GameObject{
         this.gm=gm;
         this.group=group;
         gm.add(this);
+        this.rect=new Rectangle(x,y,WIDTH,HEIGHT);
     }
 
     public int getX() {
         return x;
+    }
+
+    public Rectangle getRect() {
+        return rect;
     }
 
     public Group getGroup() {
@@ -92,15 +98,14 @@ public class Bullet extends GameObject{
         if(this.getGroup()==tank.getGroup()){
             return;
         }
-        Rectangle rect1 = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
-        Rectangle rect2 = new Rectangle(tank.x,tank.y,Tank.WIDTH,Tank.HEIGHT);
-        if(rect1.intersects(rect2)){
+        Rectangle rect2 = tank.getRect();
+        if(rect.intersects(rect2)){
             this.die();
             tank.die();
         }
     }
 
-    private void die() {
+    public void die() {
         this.living=false;
     }
 }
