@@ -13,7 +13,7 @@ import java.awt.event.WindowEvent;
  * @create: 2021-05-12 20:52
  **/
 public class TankFrame extends Frame {
-    GameModel gameModel=new GameModel();
+    GameModel gameModel=GameModel.getInstance();
     static final int GAME_WIDTH=800,GAME_HEIGHT=600;
 
     public TankFrame() throws HeadlessException {

@@ -14,6 +14,6 @@ public class DefaultFireStrategy implements FireStrategy{
     public void fire(Tank tank) {
         int xX=tank.x+Tank.WIDTH/2;
         int yY=tank.y+Tank.HEIGHT/2;
-        new Bullet(xX,yY,tank.dir,tank.gm,tank.getGroup()== Group.GOOD? Group.GOOD: Group.BAD);
+        new Bullet(xX,yY,tank.dir,tank.getGroup()== Group.GOOD? Group.GOOD: Group.BAD);
     }
 }

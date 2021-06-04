@@ -1,6 +1,7 @@
 package com.mashibing.tank.col;
 
 import com.mashibing.tank.Bullet;
+import com.mashibing.tank.GameModel;
 import com.mashibing.tank.GameObject;
 import com.mashibing.tank.Tank;
 import com.mashibing.tank.Wall;
@@ -22,7 +23,7 @@ public class BulletWallCollider implements Collider{
             Rectangle rect2 = wall.getRect();
             if(rect1.intersects(rect2)){
                 bullet.die();
-                bullet.gm.remove(bullet);
+                GameModel.getInstance().remove(bullet);
                 return;
             }
         }else if(o1 instanceof Wall && o2 instanceof Bullet){

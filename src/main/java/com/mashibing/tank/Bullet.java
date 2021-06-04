@@ -15,14 +15,13 @@ public class Bullet extends GameObject{
     private int x,y;
     private Dir dir=Dir.UP;
     boolean living =true;
-    public GameModel gm=null;
     private Group group = Group.BAD;
     private Rectangle rect=null;
 
     @Override
     public void paint(Graphics g) {
         if(!living){
-            gm.remove(this);
+            GameModel.getInstance().remove(this);
             return;
         }
         move();
@@ -54,13 +53,12 @@ public class Bullet extends GameObject{
         rect.y=y;
     }
 
-    public Bullet(int x, int y, Dir dir,GameModel gm,Group group) {
+    public Bullet(int x, int y, Dir dir,Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.gm=gm;
         this.group=group;
-        gm.add(this);
+        GameModel.getInstance().add(this);
         this.rect=new Rectangle(x,y,WIDTH,HEIGHT);
     }
 

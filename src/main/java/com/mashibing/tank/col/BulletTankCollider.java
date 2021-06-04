@@ -1,6 +1,7 @@
 package com.mashibing.tank.col;
 
 import com.mashibing.tank.Bullet;
+import com.mashibing.tank.GameModel;
 import com.mashibing.tank.GameObject;
 import com.mashibing.tank.Tank;
 
@@ -25,8 +26,8 @@ public class BulletTankCollider implements Collider{
             if(rect1.intersects(rect2)){
                 bullet.die();
                 tank.die();
-                bullet.gm.remove(bullet);
-                tank.gm.remove(tank);
+                GameModel.getInstance().remove(bullet);
+                GameModel.getInstance().remove(tank);
             }
         }else if(o1 instanceof Tank && o2 instanceof Bullet){
             collide(o2,o1);

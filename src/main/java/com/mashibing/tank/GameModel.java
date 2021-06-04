@@ -4,6 +4,7 @@ import com.mashibing.tank.col.BulletTankCollider;
 import com.mashibing.tank.col.Collider;
 import com.mashibing.tank.col.ColliderChain;
 import com.mashibing.tank.col.TankTankCollider;
+import sun.security.jca.GetInstance;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -15,7 +16,14 @@ import java.util.List;
  * @create: 2021-06-02 20:28
  **/
 public class GameModel {
-    private Tank myTank =new Tank(200,500,Dir.UP,Group.GOOD,this);
+
+    private static class instanceBuilder{
+        public static final GameModel INSTANCE=new GameModel();
+    }
+    static {
+        instanceBuilder.INSTANCE.init();
+    }
+    private Tank myTank=null;
     /*public java.util.List<Tank> enemies=new ArrayList<>(4);
     List<Bullet> bullets=new ArrayList<>();
     List<Explode> explodes=new ArrayList<>();*/
@@ -23,14 +31,21 @@ public class GameModel {
     List<GameObject> objects=new ArrayList<>();
     ColliderChain colliderChain=new ColliderChain();
 
-    public GameModel(){
+    public static GameModel getInstance(){
+        return instanceBuilder.INSTANCE;
+    }
+    private void init(){
+        myTank =new Tank(200,500,Dir.UP,Group.GOOD);
         for(int i=0; i<4; i++){
-            objects.add(new Tank(300+i*80,500, Dir.UP,Group.BAD,this));
+            new Tank(300+i*80,500, Dir.UP,Group.BAD);
         }
-        add(new Wall(150, 150, 200, 50));
-        add(new Wall(550, 150, 200, 50));
-        add(new Wall(300, 300, 50, 200));
-        add(new Wall(550, 300, 50, 200));
+        new Wall(150, 150, 200, 50);
+        new Wall(550, 150, 200, 50);
+        new Wall(300, 300, 50, 200);
+        new Wall(550, 300, 50, 200);
+    }
+    private  GameModel(){
+
     }
     public void add(GameObject go){
         objects.add(go);

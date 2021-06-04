@@ -37,17 +37,15 @@ public class Tank extends GameObject {
     public int preX,preY;
     public Dir dir = Dir.UP;
     public FireStrategy fireStrategy = null;
-    public GameModel gm = null;
     boolean moving = true;
     boolean living = true;
     Rectangle rect = null;
     private Group group = Group.BAD;
-    public Tank(int x, int y, Dir dir, Group group, GameModel gm) {
+    public Tank(int x, int y, Dir dir, Group group) {
         super();
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.gm = gm;
         this.group = group;
         this.rect=new Rectangle(x,y,WIDTH,HEIGHT);
         if (this.group == Group.GOOD) {
@@ -65,6 +63,7 @@ public class Tank extends GameObject {
                 e.printStackTrace();
             }
         }
+        GameModel.getInstance().add(this);
     }
 
     public int getPreX() {
@@ -90,7 +89,7 @@ public class Tank extends GameObject {
     @Override
     public void paint(Graphics g) {
         if (!this.living) {
-            gm.remove(this);
+            GameModel.getInstance().remove(this);
             return;
         }
         move();
@@ -223,7 +222,7 @@ public class Tank extends GameObject {
     }
 
     public void die() {
-        gm.add(new Explode(x, y, gm));
+        new Explode(x, y);
         this.living = false;
     }
 

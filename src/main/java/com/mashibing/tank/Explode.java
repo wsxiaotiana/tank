@@ -13,14 +13,13 @@ public class Explode extends GameObject{
 
     private int x,y;
     private boolean living = true;
-    GameModel gm=null;
     private int step=0;
 
-    public Explode(int x, int y, GameModel gm) {
+    public Explode(int x, int y) {
         super();
         this.x = x;
         this.y = y;
-        this.gm=gm;
+        GameModel.getInstance().add(this);
         Audio audio=new Audio("audio/explode.wav");
         audio.play();
     }
@@ -29,7 +28,7 @@ public class Explode extends GameObject{
         g.drawImage(ImageMgr.explodeImages[step++],x,y,null);
         if(step>=ImageMgr.explodeImages.length){
             step=0;
-            gm.remove(this);
+            GameModel.getInstance().remove(this);
         }
     }
 

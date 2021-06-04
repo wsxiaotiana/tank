@@ -17,7 +17,7 @@ public class AllDirectionFireStrategy implements FireStrategy {
         int yY=tank.y+Tank.HEIGHT/2;
         Dir[] dirs=Dir.values();
         for(Dir dir:dirs){
-            new Bullet(xX,yY, dir,tank.gm,tank.getGroup()== Group.GOOD? Group.GOOD: Group.BAD);
+            new Bullet(xX,yY, dir,tank.getGroup()== Group.GOOD? Group.GOOD: Group.BAD);
         }
     }
 }
