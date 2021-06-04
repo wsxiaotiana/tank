@@ -15,7 +15,7 @@ import java.util.List;
  * @create: 2021-06-02 20:28
  **/
 public class GameModel {
-    private Tank myTank =new Tank(200,400,Dir.UP,Group.GOOD,this);
+    private Tank myTank =new Tank(200,500,Dir.UP,Group.GOOD,this);
     /*public java.util.List<Tank> enemies=new ArrayList<>(4);
     List<Bullet> bullets=new ArrayList<>();
     List<Explode> explodes=new ArrayList<>();*/
@@ -25,8 +25,12 @@ public class GameModel {
 
     public GameModel(){
         for(int i=0; i<4; i++){
-            objects.add(new Tank(300+i*80,300, Dir.DOWN,Group.BAD,this));
+            objects.add(new Tank(300+i*80,500, Dir.UP,Group.BAD,this));
         }
+        add(new Wall(150, 150, 200, 50));
+        add(new Wall(550, 150, 200, 50));
+        add(new Wall(300, 300, 50, 200));
+        add(new Wall(550, 300, 50, 200));
     }
     public void add(GameObject go){
         objects.add(go);

@@ -46,6 +46,12 @@ public class Bullet extends GameObject{
         if(x<0 || y<0 || x>TankFrame.GAME_WIDTH || y>TankFrame.GAME_HEIGHT){
             this.die();
         }
+        updateRect();
+    }
+
+    private void updateRect() {
+        rect.x=x;
+        rect.y=y;
     }
 
     public Bullet(int x, int y, Dir dir,GameModel gm,Group group) {

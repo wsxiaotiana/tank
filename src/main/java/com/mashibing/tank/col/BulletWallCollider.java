@@ -3,6 +3,7 @@ package com.mashibing.tank.col;
 import com.mashibing.tank.Bullet;
 import com.mashibing.tank.GameObject;
 import com.mashibing.tank.Tank;
+import com.mashibing.tank.Wall;
 
 import java.awt.*;
 
@@ -11,24 +12,20 @@ import java.awt.*;
  * @author: yanxiaotian
  * @create: 2021-06-03 10:27
  **/
-public class BulletTankCollider implements Collider{
+public class BulletWallCollider implements Collider{
     @Override
     public void collide(GameObject o1, GameObject o2) {
-        if(o1 instanceof Bullet && o2 instanceof Tank){
+        if(o1 instanceof Bullet && o2 instanceof Wall){
             Bullet bullet=(Bullet) o1;
-            Tank tank=(Tank) o2;
-            if(bullet.getGroup()==tank.getGroup()){
-                return;
-            }
+            Wall wall=(Wall) o2;
             Rectangle rect1 = bullet.getRect();
-            Rectangle rect2 = tank.getRect();
+            Rectangle rect2 = wall.getRect();
             if(rect1.intersects(rect2)){
                 bullet.die();
-                tank.die();
                 bullet.gm.remove(bullet);
-                tank.gm.remove(tank);
+                return;
             }
-        }else if(o1 instanceof Tank && o2 instanceof Bullet){
+        }else if(o1 instanceof Wall && o2 instanceof Bullet){
             collide(o2,o1);
         }else {
             return;
