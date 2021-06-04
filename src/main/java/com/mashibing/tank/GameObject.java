@@ -7,7 +7,6 @@ import java.awt.*;
  * @author: yanxiaotian
  * @create: 2021-06-03 09:41
  **/
-public abstract class GameObject {
+public abstract class GameObject implements Paintble{
     public int x,y;
-    public abstract void paint(Graphics g);
 }

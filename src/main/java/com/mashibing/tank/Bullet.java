@@ -12,7 +12,6 @@ public class Bullet extends GameObject{
     public final static int HEIGHT= ImageMgr.bulletD.getWidth();
 
     private static final int SPEED = 10;
-    private int x,y;
     private Dir dir=Dir.UP;
     boolean living =true;
     private Group group = Group.BAD;
@@ -58,7 +57,7 @@ public class Bullet extends GameObject{
         this.y = y;
         this.dir = dir;
         this.group=group;
-        GameModel.getInstance().add(this);
+        //GameModel.getInstance().add(this);
         this.rect=new Rectangle(x,y,WIDTH,HEIGHT);
     }
 

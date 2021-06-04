@@ -1,6 +1,7 @@
 package com.mashibing.tank.col;
 
 import com.mashibing.tank.GameObject;
+import com.mashibing.tank.Paintble;
 import com.mashibing.tank.Tank;
 import com.mashibing.tank.Wall;
 
@@ -11,7 +12,7 @@ import com.mashibing.tank.Wall;
  **/
 public class TankWallCollider implements Collider{
     @Override
-    public void collide(GameObject o1, GameObject o2) {
+    public void collide(Paintble o1, Paintble o2) {
         if(!(o1 instanceof Tank) || !(o2 instanceof Wall)){
             return;
         }

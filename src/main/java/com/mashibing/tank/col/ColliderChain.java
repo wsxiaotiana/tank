@@ -1,6 +1,7 @@
 package com.mashibing.tank.col;
 
 import com.mashibing.tank.GameObject;
+import com.mashibing.tank.Paintble;
 import com.mashibing.tank.PropertyMgr;
 
 import java.lang.reflect.InvocationTargetException;
@@ -36,7 +37,7 @@ public class ColliderChain implements Collider{
         this.remove(collider);
     }
     @Override
-    public void collide(GameObject o1,GameObject o2){
+    public void collide(Paintble o1, Paintble o2){
         for(int i=0;i<colliders.size();i++){
             colliders.get(i).collide(o1,o2);
         }

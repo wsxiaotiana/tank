@@ -13,27 +13,9 @@ import java.util.Random;
  **/
 public class Tank extends GameObject {
     public final static int WIDTH = ImageMgr.tankD.getWidth();
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
     public final static int HEIGHT = ImageMgr.tankD.getHeight();
     private final int SPEED = 5;
     private final Random random = new Random();
-    public int x, y;
     public int preX,preY;
     public Dir dir = Dir.UP;
     public FireStrategy fireStrategy = null;

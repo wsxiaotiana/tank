@@ -11,7 +11,6 @@ public class Explode extends GameObject{
     public final static int WIDTH= ImageMgr.explodeImages[0].getWidth();
     public final static int HEIGHT= ImageMgr.explodeImages[0].getHeight();
 
-    private int x,y;
     private boolean living = true;
     private int step=0;
 

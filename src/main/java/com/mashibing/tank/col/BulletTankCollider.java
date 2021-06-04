@@ -3,6 +3,7 @@ package com.mashibing.tank.col;
 import com.mashibing.tank.Bullet;
 import com.mashibing.tank.GameModel;
 import com.mashibing.tank.GameObject;
+import com.mashibing.tank.Paintble;
 import com.mashibing.tank.Tank;
 
 import java.awt.*;
@@ -14,7 +15,7 @@ import java.awt.*;
  **/
 public class BulletTankCollider implements Collider{
     @Override
-    public void collide(GameObject o1, GameObject o2) {
+    public void collide(Paintble o1, Paintble o2) {
         if(o1 instanceof Bullet && o2 instanceof Tank){
             Bullet bullet=(Bullet) o1;
             Tank tank=(Tank) o2;

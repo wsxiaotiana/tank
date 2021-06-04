@@ -28,7 +28,7 @@ public class GameModel {
     List<Bullet> bullets=new ArrayList<>();
     List<Explode> explodes=new ArrayList<>();*/
 
-    List<GameObject> objects=new ArrayList<>();
+    List<Paintble> objects=new ArrayList<>();
     ColliderChain colliderChain=new ColliderChain();
 
     public static GameModel getInstance(){
@@ -47,7 +47,7 @@ public class GameModel {
     private  GameModel(){
 
     }
-    public void add(GameObject go){
+    public void add(Paintble go){
         objects.add(go);
     }
     public void remove(GameObject go){
